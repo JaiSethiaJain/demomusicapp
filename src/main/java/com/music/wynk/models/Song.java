@@ -1,18 +1,16 @@
 package com.music.wynk.models;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Song {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     private String songId;
     private String songName;
     private String songLyrics;
+    private int songPopularity = 1;
 
     public Song() {}
 
@@ -46,4 +44,11 @@ public class Song {
         this.songLyrics = songLyrics;
     }
 
+    public int getSongPopularity() {
+        return songPopularity;
+    }
+
+    public void setSongPopularity() {
+        this.songPopularity++;
+    }
 }

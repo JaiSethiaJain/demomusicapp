@@ -5,7 +5,8 @@ import com.music.wynk.models.Song;
 import java.util.List;
 
 public interface SongService {
-    List<Song> getSongs();
+
+    List<Song> getSongs(boolean flag);
 
     Song getSongById(String id);
 
@@ -16,4 +17,5 @@ public interface SongService {
     Song updateSong(String id, Song song);
 
     void deleteSong(String id);
+
 }

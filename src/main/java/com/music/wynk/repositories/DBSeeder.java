@@ -17,20 +17,15 @@ public class DBSeeder implements CommandLineRunner {
     @Autowired
     private UserRepository userRepository;
 
-//    public DBSeeder(SongRepository songRepository, UserRepository userRepository) {
-//        this.songRepository = songRepository;
-//        this.userRepository = userRepository;
-//    }
-
     @Override
     public void run(String... args) throws Exception {
         Song song = new Song("1", "Roar", "abc");
         Song song1 = new Song("2", "Rockstar", "pqr");
         Song song2 = new Song("3", "Roses", "xyz");
 
-        User user = new User("1", "jai", "wow");//, Arrays.asList(song, song1));
-        User user1 = new User("2", "ajeet", "hoh");//, Arrays.asList(song1));
-        User user2 = new User("3", "sanju", "sos");//, Arrays.asList(song1, song2));
+        User user = new User("1", "jai", "wow"/*, Arrays.asList(song.getSongId(), song1.getSongId())*/);
+        User user1 = new User("2", "ajeet", "hoh"/*, Arrays.asList(song1.getSongId())*/);
+        User user2 = new User("3", "sanju", "sos"/*, Arrays.asList(song1.getSongId(), song2.getSongId())*/);
 
         songRepository.deleteAll();
         userRepository.deleteAll();

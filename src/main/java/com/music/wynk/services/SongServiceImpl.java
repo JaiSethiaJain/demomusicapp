@@ -14,14 +14,13 @@ public class SongServiceImpl implements SongService {
     @Autowired
     private SongRepository songRepository;
 
-//    public SongServiceImpl(SongRepository songRepository) {
-//        this.songRepository = songRepository;
-//    }
-
     @Override
-    public List<Song> getSongs() {
+    public List<Song> getSongs(boolean flag) {
         List<Song> songs = new ArrayList<>();
         songRepository.findAll().forEach(songs::add);
+        if (flag) {
+            songs.sort((Song s1, Song s2) -> s2.getSongPopularity()-s1.getSongPopularity());
+        }
         return songs;
     }
 
@@ -37,7 +36,15 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public Song addSong(Song song) {
-        songRepository.save(song);
+        if (songRepository.existsById(song.getSongId()) == false) {
+            songRepository.save(song);
+        }
+        else {
+            Song song1 = getSongById(song.getSongId());
+            song1.setSongPopularity();
+            songRepository.save(song1);
+            song = song1;
+        }
         return song;
     }
 
@@ -49,6 +56,9 @@ public class SongServiceImpl implements SongService {
 
     @Override
     public void deleteSong(String id) {
-        songRepository.deleteById(id);
+        if (songRepository.existsById(id) == true) {
+            songRepository.deleteById(id);
+        }
     }
+
 }

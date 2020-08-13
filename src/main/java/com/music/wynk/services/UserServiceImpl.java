@@ -14,10 +14,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-//    public UserServiceImpl(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
+    @Autowired
+    private SongService songService;
 
     @Override
     public List<User> getUsers() {
@@ -28,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(String id) {
-        return userRepository.findById(id).orElse(new User("0", "", ""));
+        return userRepository.findById(id).orElse(new User("0", "", ""/*, new ArrayList<String>()*/));
     }
 
     @Override
@@ -53,12 +51,13 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-//    @Override
-//    public User addSongToUser(String id, Song song) {
-//        User user = userRepository.findById(id).orElse(new User("", "", "", new ArrayList<Song>()));
-//        user.addSong(song);
-//        userRepository.save(user);
-//        return user;
-//    }
+    @Override
+    public User addSongToUser(String id, Song song) {
+        User user = userRepository.findById(id).orElse(new User("fhfhf", "bbbs", "fbfb"/*, new ArrayList<String>()*/));
+        user.setUserSongs(song.getSongId());
+        songService.addSong(song);
+        userRepository.save(user);
+        return user;
+    }
 
 }

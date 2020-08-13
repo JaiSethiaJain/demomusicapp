@@ -17,7 +17,7 @@ public class SongController {
 
     @GetMapping
     public List<Song> getAllSongs() {
-        return songService.getSongs();
+        return songService.getSongs(false);
     }
 
     @GetMapping("/{id}")
@@ -44,6 +44,11 @@ public class SongController {
     @PutMapping("/{id}")
     public Song update(@PathVariable String id, @RequestBody Song song) {
         return songService.updateSong(id, song);
+    }
+
+    @GetMapping("/popular")
+    public List<Song> getSongsPopularityWise() {
+        return songService.getSongs(true);
     }
 
 }

@@ -16,7 +16,7 @@ public interface UserService {
 
     User updateUser(String id, User user);
 
-//    User addSongToUser(String id, Song song);
-
     void deleteUser(String id);
+
+    User addSongToUser(String id, Song song);
 }

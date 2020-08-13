@@ -1,28 +1,28 @@
 package com.music.wynk.models;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class User {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     private String userId;
     private String userName;
     private String userDesc;
-//    private List<Song> songs;
+    @ElementCollection
+    private List<String> userSongs = new ArrayList<>();
 
     public User() {}
 
-    public User(String userId, String userName, String userDesc) {
+    public User(String userId, String userName, String userDesc/*, List<String> userSongs*/) {
         this.userId = userId;
         this.userName = userName;
         this.userDesc = userDesc;
-//        this.songs = songs;
+//        this.userSongs = userSongs;
     }
 
     public String getUserId() {
@@ -49,15 +49,25 @@ public class User {
         this.userDesc = userDesc;
     }
 
-//    public List<Song> getSongs() {
-//        return songs;
+    public List<String> getUserSongs() {
+        return userSongs;
+    }
+
+    public void setUserSongs(String userSong) {
+        this.userSongs.add(userSong);
+    }
+
+    //    public List<String> getUserSongs() {
+//        return userSongs;
 //    }
-//
-//    public void setSongs(List<Song> songs) {
-//        this.songs = songs;
+
+//    public void setUserSongs(List<String> userSongs) {
+//        this.userSongs = userSongs;
 //    }
-//
-//    public void addSong(Song song) {
-//        this.songs.add(song);
+
+//    public void setUserSongs(String songId) {
+//        if (userSongs.contains(songId) == false) {
+//            userSongs.add(songId);
+//        }
 //    }
 }
