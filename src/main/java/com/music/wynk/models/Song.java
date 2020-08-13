@@ -1,14 +1,7 @@
 package com.music.wynk.models;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.List;
-
-@Document(collection = "Songs")
 public class Song {
 
-    @Id
     private String songId;
     private String songName;
     private String songLyrics;
