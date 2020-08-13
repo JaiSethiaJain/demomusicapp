@@ -47,8 +47,8 @@ public class UserController {
         return userService.updateUser(id, user);
     }
 
-    @PutMapping("/{id}/addSong")
-    public User addSongToUser(@PathVariable String id, @RequestBody Song song) {
-        return userService.addSongToUser(id, song);
-    }
+//    @PutMapping("/{id}/addSong")
+//    public User addSongToUser(@PathVariable String id, @RequestBody Song song) {
+//        return userService.addSongToUser(id, song);
+//    }
 }
