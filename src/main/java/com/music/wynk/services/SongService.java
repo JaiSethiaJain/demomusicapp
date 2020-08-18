@@ -6,16 +6,18 @@ import java.util.List;
 
 public interface SongService {
 
-    List<Song> getSongs(boolean flag);
+    List<Song> getSongs();
 
-    Song getSongById(String id);
+    List<Song> getPopularSongs();
 
-    Song getSongByName(String songName);
+    Song getSongById(String id) throws Exception;
 
-    Song addSong(Song song);
+    Song getSongByName(String songName) throws Exception;
 
-    Song updateSong(String id, Song song);
+    void addSong(Song song) throws Exception;
 
-    void deleteSong(String id);
+    void updateSong(Song song);
+
+    void deleteSong(String id) throws Exception;
 
 }

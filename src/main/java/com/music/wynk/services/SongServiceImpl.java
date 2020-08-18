@@ -5,8 +5,8 @@ import com.music.wynk.repositories.SongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SongServiceImpl implements SongService {
@@ -15,49 +15,49 @@ public class SongServiceImpl implements SongService {
     private SongRepository songRepository;
 
     @Override
-    public List<Song> getSongs(boolean flag) {
-        List<Song> songs = new ArrayList<>();
-        songRepository.findAll().forEach(songs::add);
-        if (flag) {
+    public List<Song> getSongs() {
+        return (List<Song>) songRepository.findAll();
+    }
+
+    @Override
+    public List<Song> getPopularSongs() {
+        List<Song> songs = getSongs();
+        if (songs.size()>1) {
             songs.sort((Song s1, Song s2) -> s2.getSongPopularity()-s1.getSongPopularity());
         }
         return songs;
     }
 
     @Override
-    public Song getSongById(String  id) {
-        return songRepository.findById(id).orElse(new Song("", "", "")) ;
+    public Song getSongById(String  id) throws Exception {
+        return songRepository.findById(id).orElseThrow(() -> new Exception("Can not find a song with id: "+id));
     }
 
     @Override
-    public Song getSongByName(String songName) {
-        return songRepository.findBySongName(songName);
+    public Song getSongByName(String songName) throws Exception {
+        return Optional.ofNullable(songRepository.findBySongName(songName)).orElseThrow(() -> new Exception("Can not find a song with name: "+songName));
     }
 
     @Override
-    public Song addSong(Song song) {
-        if (songRepository.existsById(song.getSongId()) == false) {
+    public void addSong(Song song) throws Exception {
+        if (songRepository.existsById(song.getSongId())) {
+            throw new Exception("Song already in catalog");
+        } else {
             songRepository.save(song);
         }
-        else {
-            Song song1 = getSongById(song.getSongId());
-            song1.setSongPopularity();
-            songRepository.save(song1);
-            song = song1;
-        }
-        return song;
     }
 
     @Override
-    public Song updateSong(String id, Song song) {
+    public void updateSong(Song song) {
         songRepository.save(song);
-        return song;
     }
 
     @Override
-    public void deleteSong(String id) {
-        if (songRepository.existsById(id) == true) {
+    public void deleteSong(String id) throws Exception {
+        try {
             songRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new Exception("Can not find a song with id: "+id);
         }
     }
 

@@ -5,9 +5,8 @@ import com.music.wynk.models.User;
 import com.music.wynk.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -17,38 +16,41 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getUsers();
+    public ResponseEntity<Object> getAllUsers() {
+        return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable String id){
-        return userService.getUserById(id);
+    public ResponseEntity<Object> getUserById(@PathVariable String id) throws Exception {
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 
     @GetMapping("/name/{userName}")
-    public User getUserByName(@PathVariable String userName) {
-        return userService.getUserByName(userName);
+    public ResponseEntity<Object> getUserByName(@PathVariable String userName) throws Exception {
+        return new ResponseEntity<>(userService.getUserByName(userName), HttpStatus.OK);
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public User create(@RequestBody User user) {
-        return userService.addUser(user);
+    public ResponseEntity<Object> create(@RequestBody User user) throws Exception {
+        userService.addUser(user);
+        return new ResponseEntity<>("User Created Successfully", HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
+    public ResponseEntity<Object> delete(@PathVariable String id) throws Exception {
         userService.deleteUser(id);
+        return new ResponseEntity<>("User Deleted Successfully", HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public User update(@PathVariable String id, @RequestBody User user) {
-        return userService.updateUser(id, user);
+    @PutMapping()
+    public ResponseEntity<Object> update(@RequestBody User user) {
+        userService.updateUser(user);
+        return new ResponseEntity<>("User Updated Successfully", HttpStatus.OK);
     }
 
     @PutMapping("/{id}/addSong")
-    public User addSongToUser(@PathVariable String id, @RequestBody Song song) {
-        return userService.addSongToUser(id, song);
+    public ResponseEntity<Object> addSongToUser(@PathVariable String id, @RequestBody Song song) throws Exception {
+        userService.addSongToUser(id, song);
+        return new ResponseEntity<>("Song Added To User Successfully", HttpStatus.OK);
     }
 }

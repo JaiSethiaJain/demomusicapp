@@ -6,17 +6,18 @@ import com.music.wynk.models.User;
 import java.util.List;
 
 public interface UserService {
+
     List<User> getUsers();
 
-    User getUserById(String id);
+    User getUserById(String id) throws Exception;
 
-    User getUserByName(String userName);
+    User getUserByName(String userName) throws Exception;
 
-    User addUser(User user);
+    void addUser(User user) throws Exception;
 
-    User updateUser(String id, User user);
+    void updateUser(User user);
 
-    void deleteUser(String id);
+    void deleteUser(String id) throws Exception;
 
-    User addSongToUser(String id, Song song);
+    void addSongToUser(String id, Song song) throws Exception;
 }
