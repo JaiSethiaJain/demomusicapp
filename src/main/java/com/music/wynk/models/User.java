@@ -1,6 +1,7 @@
 package com.music.wynk.models;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "user")
@@ -27,6 +28,7 @@ public class User {
     public User(String userName, String userDesc) {
         this.userName = userName;
         this.userDesc = userDesc;
+        this.userSongs = new HashSet<>();
     }
 
     public String getUserId() {

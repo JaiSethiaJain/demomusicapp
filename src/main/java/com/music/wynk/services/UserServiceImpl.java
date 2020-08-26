@@ -6,7 +6,6 @@ import com.music.wynk.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addSongToUser(String id, Song song) throws Exception {
-        User user = userRepository.findById(id).orElseThrow(() -> new Exception("Can not find user with id: "+id));
+        User user = getUserById(id);
         try {
             songService.addSong(song);
         } catch (Exception e) {}
@@ -68,7 +67,7 @@ public class UserServiceImpl implements UserService {
             song1.incrementSongPopularity();
             songService.updateSong(song1);
             user.addUserSong(song1.getSongName());
-            userRepository.save(user);
+            updateUser(user);
         }
     }
 
